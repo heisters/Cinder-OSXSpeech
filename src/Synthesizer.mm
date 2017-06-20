@@ -67,8 +67,12 @@ Synthesizer::speak( const string &text )
 void
 Synthesizer::dontSpeak()
 {
-    mStopRequested = true;
-    [synth stopSpeaking];
+    if ( isSpeaking() ) {
+        mStopRequested = true;
+        [synth stopSpeaking];
+    } else {
+        mIsSpeaking = false;
+    }
 }
 
 void
@@ -82,11 +86,11 @@ Synthesizer::onFinish( bool success )
 
     mStopRequested = false;
 
-    if ( !mIsSpeaking ) getDoneSpeakingSignal()();
+    if ( !mIsSpeaking ) getDoneSpeakingSignal().emit();
 }
 
 bool
 Synthesizer::isSpeaking() const
 {
-    return mIsSpeaking;
+    return mIsSpeaking && synth.isSpeaking;
 }

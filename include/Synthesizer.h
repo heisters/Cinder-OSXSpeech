@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string.h>
-#include <boost/signals2.hpp>
+#include "cinder/Signals.h"
 
 #if defined( __OBJC__ )
     @class NSSpeechSynthesizer, SynthDelegate;
@@ -16,7 +16,7 @@ namespace speech {
 class Synthesizer
 {
 public:
-    typedef boost::signals2::signal< void(void) > signal_t;
+	typedef ci::signals::Signal< void(void) > signal_t;
 
     Synthesizer();
     ~Synthesizer();
